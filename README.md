@@ -17,3 +17,12 @@ python path_to_sdk/dev_appserver.py apprtc/out/app_engine
 from the project root.
 
 Then you can access the app at [http://localhost:8080](http://localhost:8080) in your browser.
+
+## Running the backend
+
+Make `3d-posenet` the current working directory.  Then run the following commands,
+
+```
+yarn
+yarn watch
+```
