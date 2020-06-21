@@ -58,8 +58,8 @@ export default class Transform{
 			
 			// Update Left Arm
 			var leftShoulderAngle = this.rotateJoint('leftShoulder', 'leftHip', 'leftElbow', 1, -Math.PI/2);
-			console.log("Angle of leftShoulder angle in degrees is -> " + (57.2958 * leftShoulderAngle));
-			var leftElbowAngle = this.rotateJoint('leftElbow', 'leftWrist', 'leftShoulder', 1, -Math.PI);
+			var leftElbowAngle = this.rotateJoint('leftElbow', 'leftWrist', 'leftShoulder', -1, Math.PI);
+			//console.log("Angle of leftElbow angle in degrees is -> " + (57.2958 * leftElbowAngle));
 			
 			// Update Left Leg
 			var leftHipAngle = this.rotateJoint('leftHip', 'leftKnee', 'rightHip', -1, Math.PI*3/2);
@@ -67,7 +67,7 @@ export default class Transform{
 			
 			// Update rightArm
 			var rightShoulderAngle = this.rotateJoint('rightShoulder', 'rightHip', 'rightElbow', -1, Math.PI/2);
-			var rightElbowAngle = this.rotateJoint('rightElbow', 'rightWrist', 'rightShoulder', -1, Math.PI);
+			var rightElbowAngle = this.rotateJoint('rightElbow', 'rightWrist', 'rightShoulder', 1, -Math.PI);
 			
 			// Update rightLeg
 			var rightHipAngle = this.rotateJoint('rightHip', 'rightKnee', 'leftHip', 1, -Math.PI*3/2);
@@ -104,11 +104,11 @@ export default class Transform{
     rotateJoint(jointA, jointB, jointC, multiplier, defaultAngle){
         if (this.keypoints[jointA] && this.keypoints[jointB] && this.keypoints[jointC]){
             const angle = this.findAngle(this.keypoints[jointA], this.keypoints[jointB], this.keypoints[jointC]) * multiplier + defaultAngle;
-            //const sign = (this.keypoints[jointC].y > this.keypoints[jointB].y) ? 1 : -1;
 			var sign = 1;
-			if(jointA == "leftElbow" || jointA == "rightElbow")
-				if(this.is_Angle_B_Greater_Than_Angle_C(this.keypoints[jointA], this.keypoints[jointB], this.keypoints[jointC]))
+			if(jointA == "leftElbow" || jointA == "rightElbow") {
+				if(this.is_Angle_B_Greater_Than_Angle_C(jointA, jointB, jointC))
 					sign = -1;
+			}
             this.joints.update(jointA, angle * sign); // Changed by Sid from jointB to jointA and removed sign multiplier
 			return angle * sign;
         }
@@ -134,11 +134,15 @@ export default class Transform{
         return resultRadian;
     }
 
-	is_Angle_B_Greater_Than_Angle_C(pointA, pointB, pointC) {
-		var vectorBA = {'x': pointB.x - pointA.x, 'y': pointB.y - pointA.y};
-		var vectorCA = {'x': pointC.x - pointA.x, 'y': pointC.y - pointA.y};
-		var angleB = Math.acos(vectorBA.x/Math.sqrt(Math.pow(vectorBA.x, 2) + Math.pow(vectorBA.y, 2)));
-		var angleC = Math.acos(vectorCA.x/Math.sqrt(Math.pow(vectorCA.x, 2) + Math.pow(vectorCA.y, 2)));
-		return angleB > angleC;
+	is_Angle_B_Greater_Than_Angle_C(jointA, jointB, jointC) {
+		var pointA = this.keypoints[jointA];
+		var pointB = this.keypoints[jointB];
+		//var pointC = this.keypoints[jointC];
+		var vectorAB = {'x': pointB.x - pointA.x, 'y': pointB.y - pointA.y};
+		//var vectorAC = {'x': pointC.x - pointA.x, 'y': pointC.y - pointA.y};
+		//var angleB = Math.acos(vectorAB.x/Math.sqrt(Math.pow(vectorAB.x, 2) + Math.pow(vectorAB.y, 2)));
+		//var angleC = Math.acos(vectorAC.x/Math.sqrt(Math.pow(vectorAC.x, 2) + Math.pow(vectorAC.y, 2)));
+		//console.log("For " + jointA + " angle B is " + (angleB * 57.2958) + " and angle C is " + (angleC * 57.2958));
+		return vectorAB.y > 0;
 	}
 }
