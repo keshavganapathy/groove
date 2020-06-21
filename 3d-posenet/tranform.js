@@ -105,8 +105,12 @@ export default class Transform{
         if (this.keypoints[jointA] && this.keypoints[jointB] && this.keypoints[jointC]){
             const angle = this.findAngle(this.keypoints[jointA], this.keypoints[jointB], this.keypoints[jointC]) * multiplier + defaultAngle;
             //const sign = (this.keypoints[jointC].y > this.keypoints[jointB].y) ? 1 : -1;
-            this.joints.update(jointA, angle); // Changed by Sid from jointB to jointA and removed sign multiplier
-            return angle;
+			var sign = 1;
+			if(jointA == "leftElbow" || jointA == "rightElbow")
+				if(this.is_Angle_B_Greater_Than_Angle_C(this.keypoints[jointA], this.keypoints[jointB], this.keypoints[jointC]))
+					sign = -1;
+            this.joints.update(jointA, angle * sign); // Changed by Sid from jointB to jointA and removed sign multiplier
+			return angle * sign;
         }
     }
 
@@ -130,4 +134,11 @@ export default class Transform{
         return resultRadian;
     }
 
+	is_Angle_B_Greater_Than_Angle_C(pointA, pointB, pointC) {
+		var vectorBA = {'x': pointB.x - pointA.x, 'y': pointB.y - pointA.y};
+		var vectorCA = {'x': pointC.x - pointA.x, 'y': pointC.y - pointA.y};
+		var angleB = Math.acos(vectorBA.x/Math.sqrt(Math.pow(vectorBA.x, 2) + Math.pow(vectorBA.y, 2)));
+		var angleC = Math.acos(vectorCA.x/Math.sqrt(Math.pow(vectorCA.x, 2) + Math.pow(vectorCA.y, 2)));
+		return angleB > angleC;
+	}
 }
