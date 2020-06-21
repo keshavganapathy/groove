@@ -3,8 +3,8 @@ import {drawKeypoints, drawSkeleton} from './demo_util';
 
 import Transform from './tranform';
 
-const videoWidth = 500;
-const videoHeight = 500;
+const videoWidth = 780;
+const videoHeight = 780;
 
 navigator.getUserMedia = navigator.getUserMedia ||
     navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
