@@ -1,4 +1,6 @@
-# DefHacks2020
+# Groove
+
+This project is a submission to DefHacks 2020 virtual, an international hackathon. Teammates: Keshav Ganapathy, Adam Goldstein, David Aylain, Peter Ganunis, and Siddhant Shenoy.
 
 ## Running the server locally
 
