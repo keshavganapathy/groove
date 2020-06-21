@@ -7,4 +7,4 @@ Flow of the app:
 3. Apply human pose predictions on a rigged 3D character through BabylonJS.
 4. Render updates.
 
-Source code is available at: [https://github.com/mishig25/3d-posenet](https://github.com/mishig25/3d-posenet)
+Source code is available at: [https://github.com/keshavganapathy/Groove](https://github.com/keshavganapathy/Groove)

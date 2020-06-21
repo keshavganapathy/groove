@@ -27,7 +27,7 @@ export default class GraphicsEngine {
     initScene(){
         this.scene = new BABYLON.Scene(this.engine);
         const camera = this.setCamera();
-        const sphere = BABYLON.MeshBuilder.CreateSphere('', { diameter: 1 }, this.scene);
+        const sphere = BABYLON.MeshBuilder.CreateSphere('', { diameter: .0001 }, this.scene);
 		var modelName = "Dude.babylon"; // Should be either "Dude.babylon" or "dummy2.babylon"
 		
 		// Enable Physics (gravity)

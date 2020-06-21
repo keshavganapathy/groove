@@ -34,7 +34,7 @@ class App extends React.Component {
      */
     async componentDidMount() {
         this.joints = new Joints();
-        this.graphics_engine = new GraphicsEngine(this.refs.babylon, this.joints);
+        this.graphics_engine = new GraphicsEngine(this.refs.babylonUser, this.joints);
         this.posenet = new PoseNet(this.joints, this.graphics_engine, this.refs);
         const descContent = fs.readFileSync("./description.md", "utf-8");
         this.refs.description.innerHTML = markdown.toHTML(descContent);
@@ -67,7 +67,7 @@ class App extends React.Component {
                         <div className="float-right"
                             style={{display:this.state.loading ? 'none' : 'block'}}>
                             <video ref="video" id="video" playsInline/>
-                            <canvas ref="output" width={500} height={500} style={{ display: this.state.webcam ? 'block' : 'none' }}/>
+                            <canvas ref="output" width={780} height={780} style={{ display: this.state.webcam ? 'block' : 'none' }}/>
                             {/* <h1>Move Farther</h1> */}
                             {!this.state.webcam && <WeCamAccess/>}
                         </div>
@@ -77,7 +77,22 @@ class App extends React.Component {
                         </div>
                     </div>
                     <div className="col-6">
-                        <canvas ref="babylon" width={500} height={500} />
+                        <canvas ref="babylonInstructor" width={780} height={780} />
+                    </div>
+                </div>
+				<div className="row"  id="row">
+                    <div className="col-6">
+                        <div className="float-right"
+                            style={{display:this.state.loading ? 'none' : 'block'}}>
+                            <canvas ref="output" width={780} height={780} style={{ display: this.state.webcam ? 'block' : 'none' }}/>
+                        </div>
+                        <div id="loader" style={{ display: !this.state.loading ? 'none' : 'block' }}>
+                            <h3 id="loadTitle">Tensorflow Model loading ...</h3>
+                            <ReactLoading type="cylon" color="grey" height={'20%'} width={'20%'} id="reactLoader"/>
+                        </div>
+                    </div>
+                    <div className="col-6">
+                        <canvas ref="babylonUser" width={780} height={780} />
                     </div>
                 </div>
                 <div ref="description" id="description"/>
@@ -89,7 +104,7 @@ class App extends React.Component {
 const WeCamAccess = () => (
     <div id="webcamaccess">
         <h3>The device does not have a webcam OR webcam access was denied</h3>
-        <button onClick={() => window.open("https://support.google.com/chrome/answer/2693767?p=ui_voice_search&visit_id=636795900385001472-2266950072&rd=1", "_blank")}>
+        <button onClick={() => window.open("https://support.google.com/chrome/answer/2693767?p=ui_voice_search&visit_id=636795900387801472-2266978072&rd=1", "_blank")}>
             Grant Webcam Access
         </button>
     </div>);
