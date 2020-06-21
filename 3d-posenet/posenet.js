@@ -66,14 +66,19 @@ export default class PoseNet{
     video.height = videoHeight;
 
     const mobile = this.isMobile();
-    const stream = await navigator.mediaDevices.getUserMedia({
-      'audio': false,
-      'video': {
-        facingMode: 'user',
-        width: mobile ? undefined : videoWidth,
-        height: mobile ? undefined : videoHeight,
-      },
-    });
+    let stream;
+    if (window.remoteVideo && window.remoteVideo.srcObject) {
+      stream = window.remoteVideo.srcObject;
+    } else {
+      stream = await navigator.mediaDevices.getUserMedia({
+        'audio': false,
+        'video': {
+          facingMode: 'user',
+          width: mobile ? undefined : videoWidth,
+          height: mobile ? undefined : videoHeight,
+        },
+      });
+    }
     video.srcObject = stream;
 
     return new Promise((resolve) => {
