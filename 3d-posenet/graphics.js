@@ -26,32 +26,90 @@ export default class GraphicsEngine {
      */
     initScene(){
         this.scene = new BABYLON.Scene(this.engine);
-        this.scene.clearColor = new BABYLON.Color3(0.5, 0.8, 0.5);
         const camera = this.setCamera();
-        const sphere = BABYLON.MeshBuilder.CreateSphere('', { diameter: .0001 }, this.scene);
-        BABYLON.SceneLoader.ImportMesh("", `/${process.env.BPATH}/Scenes/Dude/`, "Dude.babylon", this.scene, (newMeshes, particleSystems, skeletons) => {
+        const sphere = BABYLON.MeshBuilder.CreateSphere('', { diameter: 1 }, this.scene);
+		var modelName = "Dude.babylon"; // Should be either "Dude.babylon" or "dummy2.babylon"
+		
+		// Enable Physics (gravity)
+		this.scene.enablePhysics(null, new BABYLON.OimoJSPlugin());
+		
+		// Adding light
+		var light = new BABYLON.PointLight("dir01", new BABYLON.Vector3(0, 5, 5), this.scene);
+		light.diffuse = new BABYLON.Color3(1, 1, 1);
+		light.specular = new BABYLON.Color3(0, 0, 0);
+		this.scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
+		
+		// Added Ground
+		var ground = BABYLON.Mesh.CreateGround("ground", 1000, 1000, 1, this.scene, false);
+		var groundMaterial = new BABYLON.StandardMaterial("ground", this.scene);
+		groundMaterial.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+		groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+		ground.material = groundMaterial;
+		ground.receiveShadows = true;
+		ground.checkCollisions = true;
+		ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5, restitution: 0.7}, this.scene);
+		
+		
+        BABYLON.SceneLoader.ImportMesh("", `/${process.env.BPATH}/Scenes/Dude/`, modelName, this.scene, (newMeshes, particleSystems, skeletons) => {
             const mesh = newMeshes[0];
             const skeleton = skeletons[0];
-            mesh.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
-            mesh.position = new BABYLON.Vector3(0, 0, 0);
-
-            const head_bone = skeleton.bones[7];
+            var head_bone;
+			var right_shoulder_bone, right_arm_bone, right_hip_bone, right_knee_bone;
+			var left_shoulder_bone, left_arm_bone, left_hip_bone, left_knee_bone;
 			
-			// Right Arm
-            const right_shoulder_bone = skeleton.bones[13];
-            const right_arm_bone = skeleton.bones[14];
+			// Enable gravity on mesh
+			mesh.physicsImpostor = new BABYLON.PhysicsImpostor(mesh, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }, this.scene);
+			mesh.applyGravity = true;
+			mesh.checkCollisions = true;
 			
-			// Right Leg
-			const right_hip_bone = skeleton.bones[50];
-			const right_knee_bone = skeleton.bones[51];
-			
-			// Left Arm
-            const left_shoulder_bone = skeleton.bones[32];
-            const left_arm_bone = skeleton.bones[33];
-			
-			// Left Leg
-			const left_hip_bone = skeleton.bones[54];
-			const left_knee_bone = skeleton.bones[55];
+			if(modelName == "Dude.babylon") {
+				mesh.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1);
+				mesh.position = new BABYLON.Vector3(0, 0, 0);
+				
+				/* Bone setup for Dude model */
+				// Head
+				head_bone = skeleton.bones[7];
+				
+				// Right Arm
+				right_shoulder_bone = skeleton.bones[13];
+				right_arm_bone = skeleton.bones[14];
+				
+				// Right Leg
+				right_hip_bone = skeleton.bones[50];
+				right_knee_bone = skeleton.bones[51];
+				
+				// Left Arm
+				left_shoulder_bone = skeleton.bones[32];
+				left_arm_bone = skeleton.bones[33];
+				
+				// Left Leg
+				left_hip_bone = skeleton.bones[54];
+				left_knee_bone = skeleton.bones[55];
+			}
+			else {
+				mesh.scaling = new BABYLON.Vector3(4, 4, 4);
+				mesh.position = new BABYLON.Vector3(0, 0, 0);
+				
+				/* Bone setup for Blue Humanoid Model */
+				// Head
+				head_bone = skeleton.bones[4];
+				
+				// Right Arm
+				right_shoulder_bone = skeleton.bones[34]; // RightArm
+				right_arm_bone = skeleton.bones[35];	// RightForeArm
+				
+				// Right Leg
+				right_hip_bone = skeleton.bones[57];	// RightUpLeg
+				right_knee_bone = skeleton.bones[58];	// RightLeg
+				
+				// Left Arm
+				left_shoulder_bone = skeleton.bones[10]; // LeftArm
+				left_arm_bone = skeleton.bones[11];	// LeftForeArm
+				
+				// Left Leg
+				left_hip_bone = skeleton.bones[62];	// LeftUpLeg
+				left_knee_bone = skeleton.bones[63];	// LeftLeg
+			}				
 
             const lookAtCtl = new BABYLON.BoneLookController(mesh, head_bone, sphere.position, { adjustYaw: Math.PI * .5, adjustRoll: Math.PI * .5 });
 
@@ -59,27 +117,53 @@ export default class GraphicsEngine {
 
                 const { data } = this.joints;
 
-                sphere.position.x = 0 + data.head.x;
-                sphere.position.y = 6 + data.head.y;
-                sphere.position.z = 5;
+				if(modelName == "Dude.babylon") {
+					sphere.position.x = 0 + data.head.x;
+					sphere.position.y = 6 + data.head.y;
+					sphere.position.z = 5;
 
-                lookAtCtl.update();
+					lookAtCtl.update();
+					
+					// Right Arm
+					right_shoulder_bone.rotation = new BABYLON.Vector3(0, data.rightShoulder, 0); // Changed by Sid from 1.5 to 1
+					right_arm_bone.rotation = new BABYLON.Vector3(0, data.rightElbow, 0);
+					
+					// Right Leg
+					right_hip_bone.rotation = new BABYLON.Vector3(0, data.rightHip, 0);
+					right_knee_bone.rotation = new BABYLON.Vector3(0, data.rightKnee, 0);
+					
+					// Left Arm
+					left_shoulder_bone.rotation = new BABYLON.Vector3(0, data.leftShoulder, 0); // Changed by Sid from -1.5 to -1
+					left_arm_bone.rotation = new BABYLON.Vector3(0, data.leftElbow, 0);
+					
+					// Left Leg
+					left_hip_bone.rotation = new BABYLON.Vector3(0, data.leftHip, 0);
+					left_knee_bone.rotation = new BABYLON.Vector3(0, data.leftKnee, 0);
+				}
+				else {
+					sphere.position.x = 0 + data.head.x;
+					sphere.position.y = 20 + data.head.y;
+					sphere.position.z = 0;
+
+					lookAtCtl.update();
+					
+					// Right Arm
+					right_shoulder_bone.rotation = new BABYLON.Vector3(0, 0, -data.rightShoulder); // Changed by Sid from 1.5 to 1
+					right_arm_bone.rotation = new BABYLON.Vector3(0, data.rightElbow, 0);
+					
+					// Right Leg
+					right_hip_bone.rotation = new BABYLON.Vector3(0, 0, data.rightHip - Math.PI);
+					right_knee_bone.rotation = new BABYLON.Vector3(0, 0, data.rightKnee);
+					
+					// Left Arm
+					left_shoulder_bone.rotation = new BABYLON.Vector3(0, 0, -data.leftShoulder); // Changed by Sid from -1.5 to -1
+					left_arm_bone.rotation = new BABYLON.Vector3(0, data.leftElbow, 0);
+					
+					// Left Leg
+					left_hip_bone.rotation = new BABYLON.Vector3(0, 0, data.leftHip - Math.PI);
+					left_knee_bone.rotation = new BABYLON.Vector3(0, 0, data.leftKnee);
+				}
 				
-				// Right Arm
-                right_shoulder_bone.rotation = new BABYLON.Vector3(0, data.rightShoulder, 0); // Changed by Sid from 1.5 to 1
-                right_arm_bone.rotation = new BABYLON.Vector3(0, data.rightElbow, 0);
-				
-				// Right Leg
-				right_hip_bone.rotation = new BABYLON.Vector3(0, data.rightHip, 0);
-				//right_knee_bone.setRotation(new BABYLON.Vector3(0, data.rightKnee, 0), BABYLON.Space.Local, mesh);
-				
-				// Left Arm
-				left_shoulder_bone.rotation = new BABYLON.Vector3(0, data.leftShoulder, 0); // Changed by Sid from -1.5 to -1
-                left_arm_bone.rotation = new BABYLON.Vector3(0, data.leftElbow, 0);
-				
-				// Left Leg
-				left_hip_bone.rotation = new BABYLON.Vector3(0, data.leftHip, 0);
-				//left_knee_bone.setRotation(new BABYLON.Vector3(0, -data.leftKnee, 0), BABYLON.Space.Local, mesh);
             });
         });
     };

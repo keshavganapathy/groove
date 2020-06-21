@@ -26,11 +26,11 @@ export default class PoseNet{
       algorithm: 'single-pose',
       input: {
         outputStride: 16,
-        imageScaleFactor: 0.50,
+        imageScaleFactor: 0.75,
       },
       singlePoseDetection: {
-        minPoseConfidence: 0.1,
-        minPartConfidence: 0.5,
+        minPoseConfidence: 0.5,
+        minPartConfidence: 0.7,
       },
       net: null,
     };
