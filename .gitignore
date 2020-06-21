@@ -1,3 +1,6 @@
 3d-posenet/node_modules/
 3d-posenet/.cache/
 3d-posenet/.vscode/
+.idea
+venv/
+*.log

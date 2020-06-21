@@ -20,27 +20,54 @@ LOOPBACK_CLIENT_ID = 'LOOPBACK_CLIENT_ID'
 
 # Turn/Stun server override. This allows AppRTC to connect to turn servers
 # directly rather than retrieving them from an ICE server provider.
-ICE_SERVER_OVERRIDE = None
+# ICE_SERVER_OVERRIDE = None
 # Enable by uncomment below and comment out above, then specify turn and stun
-# ICE_SERVER_OVERRIDE  = [
-#   {
-#     "urls": [
-#       "turn:hostname/IpToTurnServer:19305?transport=udp",
-#       "turn:hostname/IpToTurnServer:19305?transport=tcp"
-#     ],
-#     "username": "TurnServerUsername",
-#     "credential": "TurnServerCredentials"
-#   },
-#   {
-#     "urls": [
-#       "stun:hostname/IpToStunServer:19302"
-#     ]
-#   }
-# ]
+ICE_SERVER_OVERRIDE = [
+        {
+            "url":"stun:global.stun.twilio.com:3478?transport=udp",
+            "urls":["stun:global.stun.twilio.com:3478?transport=udp"]
+        },
+        {
+            "url":"turn:global.turn.twilio.com:3478?transport=udp",
+            "username":"61caaa422f27f29c2098b0d974a59dd23d929eba84ec5fab9ad0f1b83af624f6",
+            "urls":["turn:global.turn.twilio.com:3478?transport=udp"],
+            "credential":"QFNgm9eQLFCY/hOg0Hor1RNtagRhbBY/PMpjpDak7Xs="
+        },
+        {
+            "url":"turn:global.turn.twilio.com:3478?transport=tcp",
+            "username":"61caaa422f27f29c2098b0d974a59dd23d929eba84ec5fab9ad0f1b83af624f6",
+            "urls":["turn:global.turn.twilio.com:3478?transport=tcp"],
+            "credential":"QFNgm9eQLFCY/hOg0Hor1RNtagRhbBY/PMpjpDak7Xs="
+        },
+        {
+            "url":"turn:global.turn.twilio.com:443?transport=tcp",
+            "username":"61caaa422f27f29c2098b0d974a59dd23d929eba84ec5fab9ad0f1b83af624f6",
+            "urls":["turn:global.turn.twilio.com:443?transport=tcp"],
+            "credential":"QFNgm9eQLFCY/hOg0Hor1RNtagRhbBY/PMpjpDak7Xs="
+        }
+    ]
+
+
+
+#   [
+# {
+#  "urls": [
+#   "turn:hostname/IpToTurnServer:19305?transport=udp",
+#   "turn:hostname/IpToTurnServer:19305?transport=tcp"
+# ],
+#  "username": "TurnServerUsername",
+#  "credential": "TurnServerCredentials"
+#  },
+# {
+#  "urls": [
+#   "stun:hostname/IpToStunServer:19302"
+#   ]
+# }
+#]
 
 ICE_SERVER_BASE_URL = 'https://networktraversal.googleapis.com'
-ICE_SERVER_URL_TEMPLATE = '%s/v1alpha/iceconfig?key=%s'
-ICE_SERVER_API_KEY = os.environ.get('ICE_SERVER_API_KEY')
+ICE_SERVER_URL_TEMPLATE = '%swhere c?key=%s'
+ICE_SERVER_API_KEY = "AIzaSyBuXYLdV5W0ZGEAcWXazYA8kwYJVdxYrPY" # living on the edge / os.environ.get('ICE_SERVER_API_KEY')
 
 # Dictionary keys in the collider instance info constant.
 WSS_INSTANCE_HOST_KEY = 'host_port_pair'
