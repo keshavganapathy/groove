@@ -56,11 +56,23 @@ export default class Transform{
 			/* Added by Sid
 			To update the angles of arms in Joints */
 			
-			// Update leftShoulderAngle
-			var leftShoulderAngle = this.rotateJoint('leftShoulder', 'leftHip', 'leftElbow');
+			// Update Left Arm
+			var leftShoulderAngle = this.rotateJoint('leftShoulder', 'leftHip', 'leftElbow', 1, -Math.PI/2);
+			console.log("Angle of leftShoulder angle in degrees is -> " + (57.2958 * leftShoulderAngle));
+			var leftElbowAngle = this.rotateJoint('leftElbow', 'leftWrist', 'leftShoulder', 1, -Math.PI);
 			
-			// Update rightShoulderAngle
-			var rightShoulderAngle = this.rotateJoint('rightShoulder', 'rightHip', 'rightElbow');
+			// Update Left Leg
+			var leftHipAngle = this.rotateJoint('leftHip', 'leftKnee', 'rightHip', -1, Math.PI*3/2);
+			//var leftKneeAngle = this.rotateJoint('leftKnee', 'leftAnkle', 'leftHip', 1, Math.PI);
+			
+			// Update rightArm
+			var rightShoulderAngle = this.rotateJoint('rightShoulder', 'rightHip', 'rightElbow', -1, Math.PI/2);
+			var rightElbowAngle = this.rotateJoint('rightElbow', 'rightWrist', 'rightShoulder', -1, Math.PI);
+			
+			// Update rightLeg
+			var rightHipAngle = this.rotateJoint('rightHip', 'rightKnee', 'leftHip', 1, -Math.PI*3/2);
+			//var rightKneeAngle = this.rotateJoint('rightKnee', 'rightAnkle', 'rightHip', 1, Math.PI);
+			
 			
         }
     }
@@ -86,13 +98,14 @@ export default class Transform{
      * @param {integer} jointA index of a joint
      * @param {intger} jointB index of a joint
      * @param {intger} jointC index of a joint
+	 * @param {float} default angle of the joint for the 3D model
      * @returns {float} angle
      */
-    rotateJoint(jointA, jointB, jointC){
+    rotateJoint(jointA, jointB, jointC, multiplier, defaultAngle){
         if (this.keypoints[jointA] && this.keypoints[jointB] && this.keypoints[jointC]){
-            const angle = this.findAngle(this.keypoints[jointA], this.keypoints[jointB], this.keypoints[jointC]);
-            const sign = (this.keypoints[jointC].y > this.keypoints[jointB].y) ? 1 : -1;
-            this.joints.update(jointA, sign * angle); // Changed by Sid from jointB to jointA
+            const angle = this.findAngle(this.keypoints[jointA], this.keypoints[jointB], this.keypoints[jointC]) * multiplier + defaultAngle;
+            //const sign = (this.keypoints[jointC].y > this.keypoints[jointB].y) ? 1 : -1;
+            this.joints.update(jointA, angle); // Changed by Sid from jointB to jointA and removed sign multiplier
             return angle;
         }
     }
@@ -114,7 +127,7 @@ export default class Transform{
         const p13 = Math.sqrt(Math.pow((p1.x - p3.x), 2) + Math.pow((p1.y - p3.y), 2));
         const p23 = Math.sqrt(Math.pow((p2.x - p3.x), 2) + Math.pow((p2.y - p3.y), 2));
         const resultRadian = Math.acos(((Math.pow(p12, 2)) + (Math.pow(p13, 2)) - (Math.pow(p23, 2))) / (2 * p12 * p13));
-        return resultRadian - Math.PI/2;
+        return resultRadian;
     }
 
 }

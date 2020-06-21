@@ -36,10 +36,22 @@ export default class GraphicsEngine {
             mesh.position = new BABYLON.Vector3(0, 0, 0);
 
             const head_bone = skeleton.bones[7];
+			
+			// Right Arm
             const right_shoulder_bone = skeleton.bones[13];
             const right_arm_bone = skeleton.bones[14];
+			
+			// Right Leg
+			const right_hip_bone = skeleton.bones[50];
+			const right_knee_bone = skeleton.bones[51];
+			
+			// Left Arm
             const left_shoulder_bone = skeleton.bones[32];
             const left_arm_bone = skeleton.bones[33];
+			
+			// Left Leg
+			const left_hip_bone = skeleton.bones[54];
+			const left_knee_bone = skeleton.bones[55];
 
             const lookAtCtl = new BABYLON.BoneLookController(mesh, head_bone, sphere.position, { adjustYaw: Math.PI * .5, adjustRoll: Math.PI * .5 });
 
@@ -52,11 +64,22 @@ export default class GraphicsEngine {
                 sphere.position.z = 5;
 
                 lookAtCtl.update();
-
-                right_shoulder_bone.rotation = new BABYLON.Vector3(0, 1 * data.rightShoulder, 0); // Changed by Sid from 1.5 to 1
+				
+				// Right Arm
+                right_shoulder_bone.rotation = new BABYLON.Vector3(0, data.rightShoulder, 0); // Changed by Sid from 1.5 to 1
                 right_arm_bone.rotation = new BABYLON.Vector3(0, data.rightElbow, 0);
-                left_shoulder_bone.rotation = new BABYLON.Vector3(0, -1 * data.leftShoulder, 0); // Changed by Sid from -1.5 to -1
-                left_arm_bone.rotation = new BABYLON.Vector3(0, -data.leftElbow, 0);
+				
+				// Right Leg
+				right_hip_bone.rotation = new BABYLON.Vector3(0, data.rightHip, 0);
+				//right_knee_bone.setRotation(new BABYLON.Vector3(0, data.rightKnee, 0), BABYLON.Space.Local, mesh);
+				
+				// Left Arm
+				left_shoulder_bone.rotation = new BABYLON.Vector3(0, data.leftShoulder, 0); // Changed by Sid from -1.5 to -1
+                left_arm_bone.rotation = new BABYLON.Vector3(0, data.leftElbow, 0);
+				
+				// Left Leg
+				left_hip_bone.rotation = new BABYLON.Vector3(0, data.leftHip, 0);
+				//left_knee_bone.setRotation(new BABYLON.Vector3(0, -data.leftKnee, 0), BABYLON.Space.Local, mesh);
             });
         });
     };

@@ -9,8 +9,12 @@ export default class Joints{
         this.data = {
             'rightShoulder': 0,
             'rightElbow': 0,
+			'rightHip': 0,
+			'rightKnee': 0,
             'leftShoulder': 0,
             'leftElbow': 0,
+			'leftHip': 0,
+			'leftKnee': 0,
             'head': {
                 'x': 0, 'y': 0
             }
