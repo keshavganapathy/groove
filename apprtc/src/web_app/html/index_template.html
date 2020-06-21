@@ -32,6 +32,7 @@
 </head>
 
 <body>
+
   <!--
    * Keep the HTML id attributes in sync with |UI_CONSTANTS| defined in
    * appcontroller.js.
@@ -43,7 +44,7 @@
   </div>
 
   <div id="room-selection" class="hidden">
-    <h1>Grove</h1>
+    <h1>Groove</h1>
     <p id="instructions">Room name</p>
     <div>
       <div id="room-id-input-div">
@@ -70,7 +71,7 @@
     <div id="sharing-div">
       <div id="room-link">Waiting for someone to join this room: <a id="room-link-href" href="{{ room_link }}" target="_blank">{{ room_link }}</a></div>
     </div>
-    <div id="info-div">Code for AppRTC is available from <a href="http://github.com/webrtc/apprtc" title="GitHub repo for AppRTC">github.com/webrtc/apprtc</a></div>
+    <div id="info-div">Code for Groove is available from <a href="https://github.com/keshavganapathy/Groove" title="GitHub repo for Groove">https://github.com/keshavganapathy/Groove</a></div>
     <div id="status-div"></div>
     <div id="rejoin-div" class="hidden"><span>You have left the call.</span> <button id="rejoin-button">REJOIN</button><button id="new-room-button">NEW ROOM</button></div>
   </footer>
@@ -109,13 +110,6 @@
       <path transform="scale(0.7), translate(11,10)" d="M24 18c-3.21 0-6.3.5-9.2 1.44v6.21c0 .79-.46 1.47-1.12 1.8-1.95.98-3.74 2.23-5.33 3.7-.36.35-.85.57-1.4.57-.55 0-1.05-.22-1.41-.59L.59 26.18c-.37-.37-.59-.87-.59-1.42 0-.55.22-1.05.59-1.42C6.68 17.55 14.93 14 24 14s17.32 3.55 23.41 9.34c.37.36.59.87.59 1.42 0 .55-.22 1.05-.59 1.41l-4.95 4.95c-.36.36-.86.59-1.41.59-.54 0-1.04-.22-1.4-.57-1.59-1.47-3.38-2.72-5.33-3.7-.66-.33-1.12-1.01-1.12-1.8v-6.21C30.3 18.5 27.21 18 24 18z" fill="white"/>
     </svg>
 
-  </div>
-  <div id="privacy">
-    <a href="//www.google.com/accounts/TOS">Terms</a>
-    &#32;&#124;&#32;
-    <a href="//www.google.com/policies/privacy/">Privacy</a>
-    &#32;&#124;&#32;
-    <a href="//github.com/webrtc/apprtc">Code repo</a>
   </div>
 
 {% if not chromeapp %}
