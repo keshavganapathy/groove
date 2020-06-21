@@ -63,7 +63,7 @@ export default class Transform{
 			
 			// Update Left Leg
 			var leftHipAngle = this.rotateJoint('leftHip', 'leftKnee', 'rightHip', -1, Math.PI*3/2);
-			//var leftKneeAngle = this.rotateJoint('leftKnee', 'leftAnkle', 'leftHip', 1, Math.PI);
+			var leftKneeAngle = this.rotateJoint('leftKnee', 'leftAnkle', 'leftHip', -1, Math.PI);
 			
 			// Update rightArm
 			var rightShoulderAngle = this.rotateJoint('rightShoulder', 'rightHip', 'rightElbow', -1, Math.PI/2);
@@ -71,7 +71,7 @@ export default class Transform{
 			
 			// Update rightLeg
 			var rightHipAngle = this.rotateJoint('rightHip', 'rightKnee', 'leftHip', 1, -Math.PI*3/2);
-			//var rightKneeAngle = this.rotateJoint('rightKnee', 'rightAnkle', 'rightHip', 1, Math.PI);
+			var rightKneeAngle = this.rotateJoint('rightKnee', 'rightAnkle', 'rightHip', 1, -Math.PI);
 			
 			
         }
