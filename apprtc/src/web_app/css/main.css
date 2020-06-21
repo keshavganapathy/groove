@@ -213,26 +213,24 @@ button {
   width: 8em;
 }
 
-button:active {
-  background-color: #3367D6;
-}
-
 button:hover {
-  background-color: #3B78E7;
+  background-color: #00bacd;
 }
 
 button:focus {
-  -webkit-box-shadow: 0 10px 15px 0 rgba(0,0,0,.5);
-  -moz-box-shadow: 0 10px 15px 0 rgba(0,0,0,.5);
-  box-shadow: 0 10px 15px 0 rgba(0,0,0,.5);
+  background-color: #00ceb9;
+  -webkit-box-shadow: 0 5px 10px 0 rgba(0,0,0,.5);
+  -moz-box-shadow: 0 5px 10px 0 rgba(0,0,0,.5);
+  box-shadow: 0 5px 10px 0 rgba(0,0,0,.5);
   outline: none;
 }
 
 button[disabled] {
-  background-color: rgb(30, 30, 30);
+  /*background-color: rgb(30, 30, 30);
   background-color: rgba(255, 255, 255, 0.12);
   color: rgb(76, 76, 76);
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.3);*/
+  background-color: #000000;
 }
 
 input[type=text] {
@@ -277,11 +275,11 @@ h1 {
   padding: 0 0 0.2em 0;
 }
 
-div#room-selection {
+/*div#room-selection {
   margin: 3em auto 0 auto;
   padding: 1em 1.5em 1.3em 1.5em;
   width: 25em;
-}
+}*/
 
 p {
   color: #111;
