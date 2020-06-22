@@ -169,7 +169,7 @@ export default class GraphicsEngine {
 				
 				// Check if user has followed current pose
 				//if(!this.isPerson && this.reactApp.posesDone<2) {
-				if(!this.isPerson && window.posesDone<2) {
+				if(!this.isPerson && this.reactApp.posesDone<2) {
 					//Check if pose matched!
 					if(this.checkIfPoseMatched()) {
 						alert("Great! You completed pose index: "+this.reactApp.posesDone + "\nNamed: "+this.joints.data['asanaName']);
