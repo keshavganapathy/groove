@@ -1,6 +1,6 @@
 # Groove
 
-Groove is a novel platform implementing 3D vision that allows high quality fitness training to be accessible to all during the COVID-19 pandemic, hosted on Google Cloud. This project is a submission to DefHacks 2020 virtual, an international hackathon. Teammates: Keshav Ganapathy, Adam Goldstein, David Aylaian, Peter Ganunis, and Siddhant Shenoy. This project recieve 2nd Place Health Hack at DefHacks 2020 virutal.
+Groove is a novel platform implementing 3D vision that allows high quality fitness training to be accessible to all during the COVID-19 pandemic, hosted on Google Cloud. This project is a submission to DefHacks 2020 virtual, an international hackathon. Teammates: Keshav Ganapathy, Adam Goldstein, David Aylaian, Peter Ganunis, and Siddhant Shenoy. This project recieved 2nd Place Health Hack at DefHacks 2020 virutal.
 
 ## Running the server locally
 
