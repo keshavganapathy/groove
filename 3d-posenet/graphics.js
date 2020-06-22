@@ -4,13 +4,15 @@ import * as BABYLON from 'babylonjs';
  * GraphicsEngine class for running BabylonJS
  * and rendering 3D rigged character on it
  */
+var modelName = "Dude.babylon"; // Should be either "Dude.babylon" or "BlueHumanoid.babylon"
+ 
 export default class GraphicsEngine {
     /**
      * the class constructor
      * @param {HTMLCanvasElement} _canvas 
      * @param {Joints} _joints 
      */
-    constructor(_canvas, _joints){
+    constructor(_canvas, _joints, _isPerson, reactApp){
         this.canvas = _canvas;
         this.engine = new BABYLON.Engine(this.canvas, true);
         this.engine.displayLoadingUI();
@@ -18,6 +20,8 @@ export default class GraphicsEngine {
         this.joints = _joints;
         this.initScene();
         this.engine.hideLoadingUI();
+		this.isPerson = _isPerson;
+		this.reactApp = reactApp;
     }
 
     /**
@@ -28,7 +32,6 @@ export default class GraphicsEngine {
         this.scene = new BABYLON.Scene(this.engine);
         const camera = this.setCamera();
         const sphere = BABYLON.MeshBuilder.CreateSphere('', { diameter: .0001 }, this.scene);
-		var modelName = "Dude.babylon"; // Should be either "Dude.babylon" or "dummy2.babylon"
 		
 		// Enable Physics (gravity)
 		this.scene.enablePhysics(null, new BABYLON.OimoJSPlugin());
@@ -164,9 +167,40 @@ export default class GraphicsEngine {
 					left_knee_bone.rotation = new BABYLON.Vector3(0, 0, data.leftKnee);
 				}
 				
+				// Check if user has followed current pose
+				if(!this.isPerson && this.reactApp.posesDone<2) {
+					//Check if pose matched!
+					if(this.checkIfPoseMatched()) {
+						alert("Great! You completed pose index: "+this.reactApp.posesDone + "\nNamed: "+this.joints.data['asanaName']);
+						this.reactApp.posesDone = this.reactApp.posesDone + 1;
+						this.reactApp.show_recorded_pose_having_index(this.reactApp.posesDone);
+					}
+				}
             });
         });
     };
+
+	/** Check if current pose was matched by the user **/
+	checkIfPoseMatched(){
+		var targetJointsData = this.joints.data;
+		var userJointsData = this.reactApp.joints.data;
+		
+		// Calculate sum of absolute angle differences for all joint angles
+		var sum = 0;
+		sum = sum + Math.abs(targetJointsData['rightShoulder'] - userJointsData['rightShoulder']);
+		sum = sum + Math.abs(targetJointsData['rightElbow'] - userJointsData['rightElbow']);
+		sum = sum + Math.abs(targetJointsData['rightHip'] - userJointsData['rightHip']);
+		sum = sum + Math.abs(targetJointsData['rightKnee'] - userJointsData['rightKnee']);
+		sum = sum + Math.abs(targetJointsData['leftShoulder'] - userJointsData['leftShoulder']);
+		sum = sum + Math.abs(targetJointsData['leftElbow'] - userJointsData['leftElbow']);
+		//console.log("Target rightShoulder angle is "+targetJointsData['rightShoulder']+" and your angle is "+userJointsData['rightShoulder']);
+		sum = sum + Math.abs(targetJointsData['leftHip'] - userJointsData['leftHip']);
+		sum = sum + Math.abs(targetJointsData['leftKnee'] - userJointsData['leftKnee']);
+		
+		// Return pose matched as true if sum is less than 90 degrees
+		console.log("Sum of differences is "+sum);
+		return sum < Math.PI/2;
+	}
 
     /** BabylonJS render function that is called every frame */
     render(){
