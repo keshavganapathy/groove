@@ -138,8 +138,8 @@ class App extends React.Component {
                             style={{display:this.state.loading ? 'none' : 'block'}}>
                             <video ref="othervideo" id="othervideo" playsInline/>
                             <canvas ref="otheroutput" width={780} height={780} style={{ display: this.state.webcam ? 'block' : 'none' }}/>
-                            {/* <h1>Move Farther</h1> */}
-                            {/*!this.state.webcam && <WeCamAccess/> */}
+                            {/* <h1>Move Farther</h1> * /}
+                            {/*!this.state.webcam && <WeCamAccess/> * /}
                         </div>
                         <div id="otherloader" style={{ display: !this.state.loading ? 'none' : 'block' }}>
                             <h3 id="otherloadTitle">Tensorflow Model loading ...</h3>
