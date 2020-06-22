@@ -8,7 +8,7 @@ This section is a brief summary of the Development section of [apprtc/README.md]
 
 First, install Google App Engine SDK for Puthon, Node.js, and Grunt. Then install the required dependencies using `npm install` and `pip install -r requirements.txt` from the `apprtc` directory.
 
-Every time the source code is changed, you need to rebuild the App Engine Package by running `grunt build` from the `apprtc` directory.
+Every time the source code is changed, you need to rebuild the App Engine Package by running `grunt build` from the `apprtc` directory. Then copy the files inside the `copyTheseFilesIntoTheJSFolderInOut-app_engine` directory to to `out/app_engine/js/`.
 
 Start the AppRTC server by running
 
