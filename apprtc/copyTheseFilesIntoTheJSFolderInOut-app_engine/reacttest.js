@@ -46395,7 +46395,7 @@ class PoseNet {
 
     const mobile = this.isMobile();
     let stream;
-    if (true || (window.remoteVideo && window.remoteVideo.srcObject)) {
+    if ((window.remoteVideo && window.remoteVideo.srcObject)) {
       stream = window.remoteVideo.srcObject;
     } else {
       stream = await navigator.mediaDevices.getUserMedia({
