@@ -9,6 +9,72 @@
 <html>
 <head>
 
+
+<script>
+
+
+
+</script>
+
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+	<script src="https://preview.babylonjs.com/Oimo.js"></script>
+<style>
+  #h2{
+    margin-top: 20px;
+    margin-bottom: 20px
+}
+
+#row{
+    margin-bottom: 20px;
+}
+
+#video{
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    display: none;
+}
+
+#loader{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+#reactLoader{
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    margin-right: -50%;
+}
+
+#description{
+    margin-left: 80px;
+    margin-right: 80px;
+    margin-top: 20px;
+}
+
+#h5{
+    color: grey;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+#webcamaccess{
+    margin-left: 20px;
+}
+
+<style>
+
+
+
+
+
   <meta charset="utf-8">
   <meta name="description" content="A novel platform implementing computer vision that allows high quality fitness training to be accessible to all.">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
@@ -141,7 +207,29 @@
     transition: opacity 1s;
 ">
 
-      <div id="react-container"></div>
+      <div id="react-container">
+
+
+
+
+        <div className="row"  id="row">
+                    <div className="col-6">
+                        <div className="float-right"
+                            style="display: block">
+                            <video ref="video" id="video" playsInline/>
+                            <canvas ref="output" id="output" width=780 height=780 style="display:block"/>
+                        </div>
+                    </div>
+                    <div className="col-6">
+                        <canvas id="babylonUser" ref="babylonUser" width={780} height={780} />
+                    </div>
+                </div>
+
+
+
+
+
+      </div>
     </div>
 
 
@@ -291,5 +379,13 @@
   </script>
 
 {% endif %}
+
+
+
+
+    <script src="/js/reacttest.js"></script>
+
+
+
 </body>
 </html>

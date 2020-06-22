@@ -36,8 +36,8 @@ class App extends React.Component {
         this.joints = new Joints();
         this.graphics_engine = new GraphicsEngine(this.refs.babylonUser, this.joints);
         this.posenet = new PoseNet(this.joints, this.graphics_engine, this.refs);
-        const descContent = fs.readFileSync("./description.md", "utf-8");
-        this.refs.description.innerHTML = markdown.toHTML(descContent);
+        //const descContent = fs.readFileSync("./description.md", "utf-8");
+        //this.refs.description.innerHTML = markdown.toHTML(descContent);
         await this.posenet.loadNetwork();
         this.setState({loading: false});
         this.posenet.startPrediction().then((webcam) => {
@@ -56,35 +56,36 @@ class App extends React.Component {
     render() {
         return (
             <div id="container">
-                <h2 className="text-center" id="h2">
+                {/*<h2 className="text-center" id="h2">
                     Controlling Virtual Character Through WebCam
                 </h2>
                 <h5 id="h5">
                     Note: make sure to give webcam ACCESS and only a single person is in the scene. Otherwise, the results might be inaccurate.
                 </h5>
-                <div className="row"  id="row">
+                <div className="row"  id="otherrow">
                     <div className="col-6">
                         <div className="float-right"
                             style={{display:this.state.loading ? 'none' : 'block'}}>
-                            <video ref="video" id="video" playsInline/>
-                            <canvas ref="output" width={780} height={780} style={{ display: this.state.webcam ? 'block' : 'none' }}/>
-                            {/* <h1>Move Farther</h1> */}
-                            {!this.state.webcam && <WeCamAccess/>}
+                            <video ref="othervideo" id="othervideo" playsInline/>
+                            <canvas ref="otheroutput" width={780} height={780} style={{ display: this.state.webcam ? 'block' : 'none' }}/>
+                            {/* <h1>Move Farther</h1> * /}
+                            {/*!this.state.webcam && <WeCamAccess/> * /}
                         </div>
-                        <div id="loader" style={{ display: !this.state.loading ? 'none' : 'block' }}>
-                            <h3 id="loadTitle">Tensorflow Model loading ...</h3>
-                            <ReactLoading type="cylon" color="grey" height={'20%'} width={'20%'} id="reactLoader"/>
+                        <div id="otherloader" style={{ display: !this.state.loading ? 'none' : 'block' }}>
+                            <h3 id="otherloadTitle">Tensorflow Model loading ...</h3>
+                            <ReactLoading type="cylon" color="grey" height={'20%'} width={'20%'} id="otherreactLoader"/>
                         </div>
                     </div>
                     <div className="col-6">
                         <canvas ref="babylonInstructor" width={780} height={780} />
                     </div>
-                </div>
+                </div> */}
 				<div className="row"  id="row">
                     <div className="col-6">
                         <div className="float-right"
                             style={{display:this.state.loading ? 'none' : 'block'}}>
-                            <canvas ref="output" width={780} height={780} style={{ display: this.state.webcam ? 'block' : 'none' }}/>
+                            <video ref="video" id="video" playsInline/>
+                            <canvas ref="output" id="output" width={780} height={780} style={{ display: this.state.webcam ? 'block' : 'none' }}/>
                         </div>
                         <div id="loader" style={{ display: !this.state.loading ? 'none' : 'block' }}>
                             <h3 id="loadTitle">Tensorflow Model loading ...</h3>
@@ -92,10 +93,10 @@ class App extends React.Component {
                         </div>
                     </div>
                     <div className="col-6">
-                        <canvas ref="babylonUser" width={780} height={780} />
+                        <canvas id="babylonUser" ref="babylonUser" width={780} height={780} />
                     </div>
                 </div>
-                <div ref="description" id="description"/>
+                {/*<div ref="description" id="description"/>*/}
             </div>
         );
     }

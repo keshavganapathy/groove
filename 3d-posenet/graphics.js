@@ -50,7 +50,7 @@ export default class GraphicsEngine {
 		ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5, restitution: 0.7}, this.scene);
 		
 		
-        BABYLON.SceneLoader.ImportMesh("", `/${process.env.BPATH}/Scenes/Dude/`, modelName, this.scene, (newMeshes, particleSystems, skeletons) => {
+        BABYLON.SceneLoader.ImportMesh("", `/dist/Scenes/Dude/`, modelName, this.scene, (newMeshes, particleSystems, skeletons) => {
             const mesh = newMeshes[0];
             const skeleton = skeletons[0];
             var head_bone;
