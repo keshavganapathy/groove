@@ -13,7 +13,7 @@ export default class Joints{
 			'rightKnee': 0,
             'leftShoulder': 0,
             'leftElbow': 0,
-			'leftHip': Math.PI,
+			'leftHip': - Math.PI,
 			'leftKnee': 0,
             'head': {
                 'x': 0, 'y': 0
