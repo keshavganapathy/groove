@@ -30,3 +30,5 @@ Make `3d-posenet` the current working directory.  Then run the following command
 yarn
 yarn watch
 ```
+
+The app can then be accessed at [http://localhost:1234](http://localhost:1234) in your browser.
